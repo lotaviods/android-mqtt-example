@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    namespace 'com.github.lotaviods.mqtt.example'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.github.lotaviods.mqtt.example"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField('String', 'MQTT_URL_BASE', System.getenv('MQTT_URL_BASE'))
+
+        buildConfigField('String', 'MQTT_USER', System.getenv('MQTT_USER'))
+        buildConfigField('String', 'MQTT_PASSWORD', System.getenv('MQTT_PASSWORD'))
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //MQTT
+    implementation "com.github.hannesa2:paho.mqtt.android:3.6.0-beta2"
+
+    // Koin for Android
+    implementation "io.insert-koin:koin-android:2.0.1"
+}
